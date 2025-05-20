@@ -84,4 +84,63 @@ Azure Databricks integrates several core components for scalable, secure, and co
 | **Security & Identity**    | Uses Azure Active Directory (AAD) for authentication and role-based access control (RBAC).                                     |
 | **Machine Learning Tools** | Includes MLflow for experiment tracking, model versioning, and deployment.                                                     |
 
+---------------
+
+## ⚙️ Azure Databricks Clusters
+
+A **cluster** in Azure Databricks is a set of computation resources and configurations on which you run **notebooks**, **jobs**, **libraries**, and **Spark applications**. Databricks clusters are fully managed, elastic, and support autoscaling.
+
+---
+
+### 🧱 Types of Clusters
+
+| **Cluster Type**     | **Description**                                                                 |
+|----------------------|----------------------------------------------------------------------------------|
+| **Interactive Cluster** | Used for ad-hoc analysis, data exploration, and development in notebooks. Shared by users. |
+| **Job Cluster**         | Automatically created to run a scheduled job or workflow, and terminated after the job completes. |
+| **SQL Warehouse**       | Specialized for running SQL queries and dashboards. Optimized for BI tools like Power BI. |
+| **Single Node Cluster** | Runs Spark locally with no worker nodes. Best for development, testing, and small workloads. |
+| **Standard Cluster**    | Distributed Spark clusters with driver and worker nodes. Supports large-scale data processing. |
+
+---
+
+### 🔧 Cluster Configuration Options
+
+When creating a cluster, you configure the following:
+
+| **Setting**                      | **Description**                                                                 |
+|----------------------------------|---------------------------------------------------------------------------------|
+| **Cluster Name**                 | A name to identify the cluster.                                                |
+| **Cluster Mode**                 | Choose between **Single Node** or **Standard** (multi-node Spark cluster).     |
+| **Databricks Runtime Version**   | Preconfigured environment including Apache Spark, Delta Lake, ML libraries.    |
+| **Node Type**                    | Virtual machine size (e.g., `Standard_DS3_v2`, `i3.xlarge`).                    |
+| **Autoscaling**                  | Automatically adds/removes worker nodes based on workload.                     |
+| **Min & Max Workers**            | Specify range if autoscaling is enabled.                                       |
+| **Auto Termination**             | Automatically terminates the cluster after a set idle time.                    |
+| **Spark Configs**                | Advanced Spark settings in key-value format (optional).                        |
+| **Init Scripts**                 | Scripts to run on cluster startup (e.g., install packages).                    |
+| **Libraries**                    | Attach Python packages, JARs, or Maven libraries.                              |
+| **Tags**                         | Add metadata to manage and track usage/costs.                                  |
+
+---
+
+### 📌 Example: Basic Cluster Configuration (JSON)
+
+```json
+{
+  "cluster_name": "data-engineering-cluster",
+  "spark_version": "13.3.x-scala2.12",
+  "node_type_id": "Standard_DS3_v2",
+  "autoscale": {
+    "min_workers": 2,
+    "max_workers": 8
+  },
+  "autotermination_minutes": 30,
+  "spark_conf": {
+    "spark.databricks.delta.preview.enabled": "true"
+  },
+  "custom_tags": {
+    "Project": "ETL Pipeline"
+  }
+}
 
